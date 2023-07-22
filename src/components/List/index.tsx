@@ -21,9 +21,13 @@ const List = () => {
     fetchProducts();
   }, []);
   const addProduct = async (product: any) => {
-    const { data } = await axios.post("http://localhost:3000/posts", product);
+    try {
+      const { data } = await axios.post("http://localhost:3000/posts", product);
 
-    dispatch({ type: "ADD_PRODUCT", payload: data });
+      dispatch({ type: "ADD_PRODUCT", payload: data });
+    } catch (error) {
+      console.log(error);
+    }
   };
   const updateProduct = async (product: any) => {
     const { data } = await axios.put(
@@ -68,7 +72,7 @@ const List = () => {
       })}
       <button
         className="border bg-blue-500 p-2"
-        onClick={() => addProduct({ title: randomStr })}
+        onClick={() => addProduct({ id: randomNumber, title: randomStr })}
       >
         Add Product
       </button>
